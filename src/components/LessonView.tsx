@@ -131,8 +131,8 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
       <div className="mb-5">
         <LessonSection num="02" title="Key Sentences" arabicTitle="الجمل" icon={MessageSquare}>
           <div className="grid md:grid-cols-2 gap-3">
-            <div className="space-y-2.5">{sentLeft.map((s) => <BilingualRow key={s} english={s} arabic="" bullet />)}</div>
-            <div className="space-y-2.5">{sentRight.map((s) => <BilingualRow key={s} english={s} arabic="" bullet />)}</div>
+            <div className="space-y-2.5">{sentLeft.map((s, i) => <StackedRow key={`sl-${i}`} english={s.en} arabic={s.ar} bullet />)}</div>
+            <div className="space-y-2.5">{sentRight.map((s, i) => <StackedRow key={`sr-${i}`} english={s.en} arabic={s.ar} bullet />)}</div>
           </div>
         </LessonSection>
       </div>
@@ -140,12 +140,12 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
       <div className="grid md:grid-cols-2 gap-5 mb-5">
         <LessonSection num="03" title="Conversation" arabicTitle="محادثة" icon={Users}>
           <div className="space-y-2.5">
-            {lesson.conversation.map((c, i) => <BilingualRow key={i} english={`${c.p}: ${c.t}`} arabic="" prefix={c.p} />)}
+            {lesson.conversation.map((c, i) => <StackedRow key={i} english={`${c.p}: ${c.t}`} arabic={c.ar} prefix={c.p} />)}
           </div>
         </LessonSection>
         <LessonSection num="04" title="Short Story" arabicTitle="قصة قصيرة" icon={BookOpen}>
           <div className="space-y-2.5">
-            {lesson.story.map((s, i) => <BilingualRow key={i} english={s} arabic="" />)}
+            {lesson.story.map((s, i) => <StackedRow key={i} english={s.en} arabic={s.ar} />)}
           </div>
         </LessonSection>
       </div>
