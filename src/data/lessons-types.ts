@@ -1,6 +1,7 @@
 export type Level = "A1" | "A2" | "B1";
 export type VocabPair = { en: string; ar: string };
-export type ConvoLine = { p: "A" | "B"; t: string };
+export type ConvoLine = { p: "A" | "B"; t: string; ar: string };
+export type BiText = { en: string; ar: string };
 
 export type Lesson = {
   id: number;
@@ -12,9 +13,9 @@ export type Lesson = {
   subtitle: string;
   caption: string;
   vocab: VocabPair[];
-  sentences: string[];
+  sentences: BiText[];
   conversation: ConvoLine[];
-  story: string[];
+  story: BiText[];
   grammar: { titleEn: string; titleAr: string; lines: string[] };
   writing: { en: string; ar: string };
   tip: { en: string; ar: string };
