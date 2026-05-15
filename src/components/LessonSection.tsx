@@ -61,3 +61,44 @@ export function BilingualRow({
     </div>
   );
 }
+
+export function StackedRow({
+  english,
+  arabic,
+  bullet = false,
+  prefix,
+}: {
+  english: string;
+  arabic: string;
+  bullet?: boolean;
+  prefix?: string;
+}) {
+  return (
+    <div className="inner-card rounded-xl px-4 py-3 space-y-2">
+      <div className="flex items-center gap-3">
+        <div className="flex-1 flex items-center gap-2 min-w-0">
+          {prefix && (
+            <span className="w-6 h-6 rounded-full bg-primary/25 border border-primary/40 text-[11px] font-bold flex items-center justify-center text-primary-foreground shrink-0">
+              {prefix}
+            </span>
+          )}
+          {bullet && <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />}
+          <span className="text-sm md:text-[15px] leading-snug">{english}</span>
+        </div>
+        <button aria-label="Play" className="play-btn shrink-0" style={{ width: "2rem", height: "2rem" }}>
+          <span className="sr-only">Play</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+      {arabic && (
+        <p
+          dir="rtl"
+          className="arabic-text text-sm md:text-[15px] leading-relaxed text-right"
+          style={{ color: "color-mix(in oklab, var(--color-foreground) 75%, transparent)" }}
+        >
+          {arabic}
+        </p>
+      )}
+    </div>
+  );
+}
