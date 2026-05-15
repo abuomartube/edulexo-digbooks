@@ -67,21 +67,51 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
           <h2 className="arabic-text text-4xl md:text-5xl font-bold leading-tight" style={{ textAlign: "right" }}>{lesson.titleAr}</h2>
           <div className="h-1 w-16 rounded-full bg-primary mt-3 ml-auto" style={{ boxShadow: "0 0 16px var(--color-primary)" }} />
           <figure className="mt-5">
-            {lesson.id === 1 ? (
-              <img src={morningImg} alt={lesson.caption} width={1280} height={800}
-                className="rounded-2xl border border-border w-full max-w-md object-cover aspect-[16/10]"
-                style={{ boxShadow: "var(--shadow-card)" }} />
-            ) : (
-              <div className={`rounded-2xl border border-border w-full max-w-md aspect-[16/10] bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden`}
-                style={{ boxShadow: "var(--shadow-card)" }}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.08),transparent_50%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(124,58,237,0.25),transparent_50%)]" />
-                <div className="relative text-center px-6">
-                  <div className="text-[10px] tracking-[0.3em] font-bold text-white/70 mb-2">{lesson.category}</div>
-                  <div className="text-4xl font-extrabold text-white/95 tracking-tight">{lesson.titleEn}</div>
+            <div className={`relative rounded-2xl border border-border w-full max-w-md aspect-[16/10] overflow-hidden bg-gradient-to-br ${gradient} group`}
+              style={{ boxShadow: "var(--shadow-card)" }}>
+              {/* Video frame chrome */}
+              <div className="absolute top-0 left-0 right-0 h-7 z-20 flex items-center gap-1.5 px-3 bg-black/40 backdrop-blur-md border-b border-white/10">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+                <span className="ml-auto text-[10px] tracking-[0.2em] font-bold text-white/70">VIDEO · {String(lesson.id).padStart(2,"0")}</span>
+              </div>
+
+              {/* Media surface */}
+              <div className="absolute inset-0 pt-7">
+                {lesson.id === 1 ? (
+                  <img src={morningImg} alt={lesson.caption} width={1280} height={800}
+                    className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full relative flex items-center justify-center">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.08),transparent_50%)]" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(124,58,237,0.25),transparent_50%)]" />
+                    <div className="relative text-center px-6">
+                      <div className="text-[10px] tracking-[0.3em] font-bold text-white/70 mb-2">{lesson.category}</div>
+                      <div className="text-3xl md:text-4xl font-extrabold text-white/95 tracking-tight">{lesson.titleEn}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Center play button */}
+              <button className="absolute inset-0 z-10 flex items-center justify-center" aria-label="Play video">
+                <span className="play-btn" style={{ width: "3.5rem", height: "3.5rem" }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+              </button>
+
+              {/* Bottom progress bar */}
+              <div className="absolute bottom-0 left-0 right-0 z-20 px-3 py-2 bg-gradient-to-t from-black/70 to-transparent">
+                <div className="flex items-center gap-2 text-[10px] text-white/80 font-mono">
+                  <span>00:00</span>
+                  <div className="flex-1 h-1 rounded-full bg-white/20 overflow-hidden">
+                    <div className="h-full w-1/3 rounded-full" style={{ background: "var(--gradient-primary)" }} />
+                  </div>
+                  <span>02:30</span>
                 </div>
               </div>
-            )}
+            </div>
             <figcaption className="text-sm text-muted-foreground text-center mt-2">{lesson.caption}</figcaption>
           </figure>
         </div>
