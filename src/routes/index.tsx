@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import { TopBar } from "@/components/TopBar";
 import { lessons, LEVEL_META, type Level } from "@/data/lessons";
 import { TOPIC_GRADIENTS } from "@/components/LessonView";
 import { ArrowRight, Sparkles } from "lucide-react";
+
+type Filter = Level | "ALL";
+const FILTERS: Filter[] = ["A1", "A2", "B1", "ALL"];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,6 +28,8 @@ const LEVEL_ACCENT: Record<Level, string> = {
 };
 
 function HomePage() {
+  const [filter, setFilter] = useState<Filter>("ALL");
+  const visibleLevels: Level[] = filter === "ALL" ? LEVEL_ORDER : [filter];
   return (
     <div className="flex min-h-screen w-full">
       <Sidebar />
@@ -36,7 +42,7 @@ function HomePage() {
             <span className="tag-chip">BILINGUAL</span>
           </div>
 
-          <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-end mb-12">
+          <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-end mb-8">
             <div>
               <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
                 Lexo <span style={{ color: "var(--color-primary-glow)" }}>for English</span>
@@ -54,7 +60,29 @@ function HomePage() {
             </div>
           </div>
 
-          {LEVEL_ORDER.map((level) => {
+          <div className="sticky top-[76px] z-10 mb-10 -mx-5 md:-mx-10 px-5 md:px-10 py-3 bg-background/70 backdrop-blur-xl border-y border-border">
+            <div className="inline-flex items-center gap-1 p-1 rounded-full border border-border bg-card/60 backdrop-blur">
+              {FILTERS.map((f) => {
+                const active = filter === f;
+                const count = f === "ALL" ? lessons.length : lessons.filter((l) => l.level === f).length;
+                return (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={`relative px-4 md:px-5 h-9 rounded-full text-xs md:text-sm font-bold tracking-wider transition ${
+                      active ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    style={active ? { background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" } : undefined}
+                  >
+                    {f}
+                    <span className={`ml-1.5 text-[10px] opacity-70`}>{count}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {visibleLevels.map((level) => {
             const items = lessons.filter((l) => l.level === level);
             const meta = LEVEL_META[level];
             const accent = LEVEL_ACCENT[level];
