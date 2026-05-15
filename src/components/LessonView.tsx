@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { BookOpen, MessageSquare, Users, GraduationCap, PenLine, Lightbulb, ArrowRight, ArrowLeft } from "lucide-react";
-import { LessonSection, BilingualRow } from "@/components/LessonSection";
+import { LessonSection, BilingualRow, StackedRow } from "@/components/LessonSection";
 import { PlayButton } from "@/components/PlayButton";
 import morningImg from "@/assets/morning-routine.jpg";
 import type { Lesson } from "@/data/lessons";
