@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import { TopBar } from "@/components/TopBar";
 import { lessons, LEVEL_META, type Level } from "@/data/lessons";
-import { TOPIC_GRADIENTS } from "@/components/LessonView";
+
 import { ArrowRight } from "lucide-react";
 
 type Filter = Level | "ALL";
