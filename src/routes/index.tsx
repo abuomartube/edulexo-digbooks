@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import { TopBar } from "@/components/TopBar";
 import { lessons, LEVEL_META, type Level } from "@/data/lessons";
 import { TOPIC_GRADIENTS } from "@/components/LessonView";
 import { ArrowRight, Sparkles } from "lucide-react";
+
+type Filter = Level | "ALL";
+const FILTERS: Filter[] = ["A1", "A2", "B1", "ALL"];
 
 export const Route = createFileRoute("/")({
   head: () => ({
