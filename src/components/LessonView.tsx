@@ -45,15 +45,17 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
   const sentLeft = lesson.sentences.slice(0, sHalf);
   const sentRight = lesson.sentences.slice(sHalf);
   const idStr = String(lesson.id).padStart(2, "0");
-  const prevId = lesson.id > 1 ? lesson.id - 1 : null;
-  const nextId = lesson.id < lessons.length ? lesson.id + 1 : null;
+  const sameLevel = lessons.filter((l) => l.level === lesson.level);
+  const idxInLevel = sameLevel.findIndex((l) => l.id === lesson.id);
+  const prevId = idxInLevel > 0 ? sameLevel[idxInLevel - 1].id : null;
+  const nextId = idxInLevel < sameLevel.length - 1 ? sameLevel[idxInLevel + 1].id : null;
   const gradient = TOPIC_GRADIENTS[lesson.category] ?? "from-purple-500/30 to-blue-500/30";
 
   return (
     <main className="flex-1 px-5 md:px-10 py-8 max-w-[1280px] w-full mx-auto">
       <div className="flex flex-wrap items-center gap-2 mb-6">
         <span className="tag-chip primary">LESSON {idStr}</span>
-        <span className="tag-chip">LEVEL A1</span>
+        <span className="tag-chip">LEVEL {lesson.level}</span>
         <span className="tag-chip">{lesson.category}</span>
       </div>
 
@@ -196,9 +198,9 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
         )}
         <div className="flex-1 flex items-center gap-3 max-w-md mx-auto">
           <div className="flex-1 h-1.5 rounded-full bg-card overflow-hidden">
-            <div className="h-full rounded-full" style={{ width: `${(lesson.id / lessons.length) * 100}%`, background: "var(--gradient-primary)", boxShadow: "0 0 12px var(--color-primary)" }} />
+            <div className="h-full rounded-full" style={{ width: `${((idxInLevel + 1) / sameLevel.length) * 100}%`, background: "var(--gradient-primary)", boxShadow: "0 0 12px var(--color-primary)" }} />
           </div>
-          <span className="text-xs text-muted-foreground whitespace-nowrap">{lesson.id} / {lessons.length}</span>
+          <span className="text-xs text-muted-foreground whitespace-nowrap">{lesson.level} · {idxInLevel + 1} / {sameLevel.length}</span>
         </div>
         {nextId ? (
           <Link to="/lesson/$id" params={{ id: String(nextId) }} className="rounded-xl px-4 py-2.5 flex items-center gap-2 text-sm font-semibold text-primary-foreground" style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }}>
