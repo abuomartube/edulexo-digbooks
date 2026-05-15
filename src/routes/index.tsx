@@ -21,11 +21,6 @@ export const Route = createFileRoute("/")({
 
 const LEVEL_ORDER: Level[] = ["A1", "A2", "B1"];
 
-const LEVEL_ACCENT: Record<Level, string> = {
-  A1: "from-purple-500/40 via-fuchsia-500/30 to-blue-500/40",
-  A2: "from-amber-500/40 via-orange-500/30 to-rose-500/40",
-  B1: "from-emerald-500/40 via-teal-500/30 to-cyan-500/40",
-};
 
 function HomePage() {
   const [filter, setFilter] = useState<Filter>("ALL");
