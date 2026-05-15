@@ -1,24 +1,11 @@
-export type VocabPair = { en: string; ar: string };
-export type ConvoLine = { p: "A" | "B"; t: string };
+import type { Lesson } from "./lessons-types";
+import { a2Lessons } from "./lessons-a2";
+import { b1Lessons } from "./lessons-b1";
 
-export type Lesson = {
-  id: number;
-  slug: string;
-  category: string;
-  titleEn: string;
-  titleAr: string;
-  subtitle: string;
-  caption: string;
-  vocab: VocabPair[];
-  sentences: string[];
-  conversation: ConvoLine[];
-  story: string[];
-  grammar: { titleEn: string; titleAr: string; lines: string[] };
-  writing: { en: string; ar: string };
-  tip: { en: string; ar: string };
-};
+export type { Lesson, VocabPair, ConvoLine, Level } from "./lessons-types";
+export { LEVEL_META } from "./lessons-types";
 
-export const lessons: Lesson[] = [
+const a1Raw: Omit<Lesson, "level">[] = [
   {
     id: 1, slug: "morning-routine", category: "DAILY LIFE",
     titleEn: "Morning Routine", titleAr: "الروتين الصباحي",
@@ -620,5 +607,8 @@ export const lessons: Lesson[] = [
     tip: { en: "Read your dreams out loud every morning.", ar: "اقرأ أحلامك بصوت مرتفع كل صباح." },
   },
 ];
+
+export const a1Lessons: Lesson[] = a1Raw.map((l) => ({ ...l, level: "A1" as const }));
+export const lessons: Lesson[] = [...a1Lessons, ...a2Lessons, ...b1Lessons];
 
 export const getLesson = (id: number) => lessons.find((l) => l.id === id);
